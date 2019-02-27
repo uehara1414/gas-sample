@@ -1,7 +1,13 @@
 import { ChatworkWebhookData } from './models';
+import { getGASJsonHTTPService, JsonHTTPService } from './gas';
 
 export class SlackNotifier {
-  constructor(SLACK_WEBHOOK_URL: string) {}
+  webhook_url: string;
+  httpService: JsonHTTPService;
+  constructor(webhook_url: string) {
+    this.webhook_url = webhook_url;
+    this.httpService = getGASJsonHTTPService();
+  }
 
   notify = (webhookData: ChatworkWebhookData): boolean => {
     const options = {
@@ -9,9 +15,7 @@ export class SlackNotifier {
       headers: { 'Content-type': 'application/json' },
       payload: JSON.stringify({ text: webhookData.body })
     };
-    // @ts-ignore
-    UrlFetchApp.fetch(this.SLACK_WEBHOOK_URL, options);
+    this.httpService.post(this.webhook_url, options);
     return true;
   };
-
 }
