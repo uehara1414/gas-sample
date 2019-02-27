@@ -1,5 +1,6 @@
 const path = require('path');
 const GasPlugin = require("gas-webpack-plugin");
+require('dotenv').config();
 
 module.exports = {
   mode: 'development',
@@ -23,6 +24,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new GasPlugin()
+    new GasPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        SLACK_WEBHOOK_URL: JSON.stringify(process.env.SLACK_WEBHOOK_URL),
+      },
+    }),
   ]
 };
