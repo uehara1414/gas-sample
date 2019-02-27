@@ -1,12 +1,13 @@
 import { ChatworkWebhookData } from './models';
-import { getGASJsonHTTPService, JsonHTTPService } from './gas';
+import { getJsonHTTPService } from './gas/index';
+import { JsonHTTPService } from './gas/interfaces';
 
 export class SlackNotifier {
   webhook_url: string;
   httpService: JsonHTTPService;
   constructor(webhook_url: string) {
     this.webhook_url = webhook_url;
-    this.httpService = getGASJsonHTTPService();
+    this.httpService = getJsonHTTPService();
   }
 
   notify = (webhookData: ChatworkWebhookData): boolean => {
