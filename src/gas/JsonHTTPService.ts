@@ -1,8 +1,8 @@
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
-import { Connection } from './interfaces';
+import { IConnection } from './interfaces';
 
-export class GASJsonHTTPService {
-  constructor(private httpConnection: Connection) {}
+export class JsonHTTPService {
+  constructor(private httpConnection: IConnection) {}
 
   post = (url: string, payload: object): HTTPResponse => {
     const options = {

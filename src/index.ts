@@ -1,9 +1,11 @@
 import { ChatworkWebhookData } from './models';
 import { SlackNotifier } from './slack';
+import { GASConnection } from './gas/index';
 
 declare var global: any;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
-const notifier = new SlackNotifier(SLACK_WEBHOOK_URL);
+const connection = new GASConnection();
+const notifier = new SlackNotifier(connection, SLACK_WEBHOOK_URL);
 
 const getRoomName = (roomId: string): string => {
   return '';

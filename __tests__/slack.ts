@@ -1,6 +1,5 @@
 import { SlackNotifier } from '../src/slack';
-import { GASJsonHTTPService } from "../src/gas/GASJsonHTTPService";
-import { JsonHTTPService } from "../src/gas/interfaces";
+import { JsonHTTPService } from '../src/gas/JsonHTTPService';
 
 describe('slack', () => {
   describe('notify', () => {
@@ -11,8 +10,7 @@ describe('slack', () => {
           request
         };
       })
-      // @ts-ignore
-      const jsonHTTPService = new GASJsonHTTPService(new MockHTTPConnection());
+      const jsonHTTPService = new JsonHTTPService(new MockHTTPConnection());
       const notifier = new SlackNotifier(jsonHTTPService, 'dummy');
       notifier.notify({
         from_account_id: '12345',
