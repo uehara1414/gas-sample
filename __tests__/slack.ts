@@ -2,16 +2,24 @@ import { SlackNotifier } from '../src/slack';
 import { JsonHTTPService } from '../src/http/JsonHTTPService';
 
 describe('slack', () => {
+  let request;
+  let MockHTTPConnection;
+  let jsonHTTPService;
+  let notifier;
+
+  beforeEach(() => {
+    request = jest.fn();
+    MockHTTPConnection = jest.fn().mockImplementation(() => {
+      return {
+        request
+      };
+    });
+    jsonHTTPService = new JsonHTTPService(new MockHTTPConnection());
+    notifier = new SlackNotifier(jsonHTTPService, 'dummy');
+  });
+
   describe('notify', () => {
     it('null', () => {
-      const request = jest.fn();
-      const MockHTTPConnection = jest.fn().mockImplementation(() => {
-        return {
-          request
-        };
-      })
-      const jsonHTTPService = new JsonHTTPService(new MockHTTPConnection());
-      const notifier = new SlackNotifier(jsonHTTPService, 'dummy');
       notifier.notify({
         from_account_id: '12345',
         room_id: '12345',
@@ -19,7 +27,17 @@ describe('slack', () => {
         body: 'Hello World!',
         send_time: new Date()
       });
+
+      const payload = {
+        text: 'Hello World!'
+      };
+
       expect(request).toBeCalled();
+      expect(request).toBeCalledWith('dummy', {
+        method: 'post',
+        headers: { 'Content-type': 'application/json' },
+        payload: JSON.stringify(payload)
+      });
     });
   });
 });
