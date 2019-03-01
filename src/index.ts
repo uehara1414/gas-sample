@@ -8,21 +8,34 @@ const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 const connection = new GASConnection();
 const jsonHttpService = new JsonHTTPService(connection);
 const notifier = new SlackNotifier(jsonHttpService, SLACK_WEBHOOK_URL, webhookData => {
-  return {
-    text: webhookData.body,
-    attachments: [
-      {
-        author_name: webhookData.from_account_id,
-        author_link: `https://www.chatwork.com/${webhookData.from_account_id}`,
-        author_icon: '...',
-        title: webhookData.room_id,
-        title_link: `https://www.chatwork.com/#!rid${webhookData.room_id}-${
-          webhookData.message_id
-        }`,
-        text: 'Hello World!'
-      }
-    ]
-  };
+  if (webhookData.chatworkAPIResults !== null) {
+    return {
+      attachments: [
+        {
+          author_name: webhookData.chatworkAPIResults.from_account_name,
+          author_icon: webhookData.chatworkAPIResults.from_account_avatar,
+          title: webhookData.chatworkAPIResults,
+          title_link: `https://www.chatwork.com/#!rid${webhookData.room_id}-${
+            webhookData.message_id
+          }`,
+          text: webhookData.body
+        }
+      ]
+    };
+  } else {
+    return {
+      attachments: [
+        {
+          author_name: '---',
+          title: webhookData.room_id,
+          title_link: `https://www.chatwork.com/#!rid${webhookData.room_id}-${
+            webhookData.message_id
+          }`,
+          text: webhookData.body
+        }
+      ]
+    };
+  }
 });
 
 const getRoomName = (roomId: string): string => {

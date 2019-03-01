@@ -30,6 +30,7 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         SLACK_WEBHOOK_URL: JSON.stringify(process.env.SLACK_WEBHOOK_URL),
+        CHATWORK_API_KEY: JSON.stringify(process.env.CHATWORK_API_KEY),
       },
     }),
   ]
