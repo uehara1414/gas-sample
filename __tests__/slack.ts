@@ -2,14 +2,6 @@ import { SlackNotifier } from '../src/slack';
 import { GASJsonHTTPService } from "../src/gas/GASJsonHTTPService";
 import { JsonHTTPService } from "../src/gas/interfaces";
 
-/*
-class MockHTTPConnection {
-  public request = (url: string, options?: any) => {
-    return;
-  };
-}
-*/
-
 describe('slack', () => {
   describe('notify', () => {
     it('null', () => {
