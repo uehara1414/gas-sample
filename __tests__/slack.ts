@@ -1,10 +1,27 @@
 import { SlackNotifier } from '../src/slack';
-import { ChatworkWebhookData } from '../src/models';
+import { GASJsonHTTPService } from "../src/gas/GASJsonHTTPService";
+import { JsonHTTPService } from "../src/gas/interfaces";
+
+/*
+class MockHTTPConnection {
+  public request = (url: string, options?: any) => {
+    return;
+  };
+}
+*/
 
 describe('slack', () => {
   describe('notify', () => {
     it('null', () => {
-      const notifier = new SlackNotifier('dummy');
+      const request = jest.fn();
+      const MockHTTPConnection = jest.fn().mockImplementation(() => {
+        return {
+          request
+        };
+      })
+      // @ts-ignore
+      const jsonHTTPService = new GASJsonHTTPService(new MockHTTPConnection());
+      const notifier = new SlackNotifier(jsonHTTPService, 'dummy');
       notifier.notify({
         from_account_id: '12345',
         room_id: '12345',
@@ -12,7 +29,7 @@ describe('slack', () => {
         body: 'Hello World!',
         send_time: new Date()
       });
-      expect(notifier.notify).toBeCalled();
+      expect(request).toBeCalled();
     });
   });
 });
