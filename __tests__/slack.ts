@@ -1,4 +1,4 @@
-import { SlackNotifier } from '../src/slack';
+import { SlackNotifier } from '../src/notifier/slack';
 import { JsonHTTPService } from '../src/http/JsonHTTPService';
 
 describe('slack', () => {
@@ -6,6 +6,7 @@ describe('slack', () => {
   let MockHTTPConnection;
   let jsonHTTPService;
   let notifier;
+  let sendJson;
 
   beforeEach(() => {
     request = jest.fn();
@@ -15,7 +16,10 @@ describe('slack', () => {
       };
     });
     jsonHTTPService = new JsonHTTPService(new MockHTTPConnection());
-    notifier = new SlackNotifier(jsonHTTPService, 'dummy');
+    sendJson = { text: 'Hello World!' };
+    notifier = new SlackNotifier(jsonHTTPService, 'dummy', webhookData => {
+      return sendJson;
+    });
   });
 
   describe('notify', () => {
@@ -46,7 +50,7 @@ describe('slack', () => {
       expect(request).toBeCalledWith('dummy', {
         method: 'post',
         headers: { 'Content-type': 'application/json' },
-        payload: JSON.stringify(payload)
+        payload: JSON.stringify(sendJson)
       });
     });
   });
