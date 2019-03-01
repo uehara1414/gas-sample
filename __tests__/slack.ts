@@ -21,15 +21,26 @@ describe('slack', () => {
   describe('notify', () => {
     it('null', () => {
       notifier.notify({
-        from_account_id: '12345',
-        room_id: '12345',
-        message_id: '12345',
+        from_account_id: '1826217',
+        room_id: '49235396',
+        message_id: '1153175727894470656',
         body: 'Hello World!',
         send_time: new Date()
       });
 
       const payload = {
-        text: 'Hello World!'
+        username: 'メンション通知君',
+        attachments: [
+          {
+            color: 'good',
+            author_name: 'uehara1414',
+            author_link: 'https://www.chatwork.com/uehara1414',
+            author_icon: 'https://appdata.chatwork.com/avatar/2511/2511127.rsz.png',
+            title: '部屋名',
+            title_link: 'https://www.chatwork.com/#!rid49235396-1153175727894470656',
+            text: 'Hello World!'
+          }
+        ]
       };
 
       expect(request).toBeCalled();
