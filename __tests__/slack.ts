@@ -32,7 +32,6 @@ describe('slack', () => {
         username: 'メンション通知君',
         attachments: [
           {
-            color: 'good',
             author_name: 'uehara1414',
             author_link: 'https://www.chatwork.com/uehara1414',
             author_icon: 'https://appdata.chatwork.com/avatar/2511/2511127.rsz.png',
