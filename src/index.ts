@@ -1,6 +1,6 @@
 import { ChatworkWebhookData } from './models';
 import { SlackNotifier } from './slack';
-import { GASConnection } from './gas/index';
+import { GASConnection } from './http/index';
 
 declare var global: any;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;

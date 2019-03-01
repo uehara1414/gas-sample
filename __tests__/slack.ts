@@ -1,5 +1,5 @@
 import { SlackNotifier } from '../src/slack';
-import { JsonHTTPService } from '../src/gas/JsonHTTPService';
+import { JsonHTTPService } from '../src/http/JsonHTTPService';
 
 describe('slack', () => {
   describe('notify', () => {
